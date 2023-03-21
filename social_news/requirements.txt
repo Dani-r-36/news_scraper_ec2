@@ -1,0 +1,7 @@
+flask
+psycopg2-binary
+flask-cors
+validators
+psycopg2
+rich
+bs4
