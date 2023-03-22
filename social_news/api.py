@@ -1,6 +1,6 @@
 """api program to retrieve story and post them"""
 import psycopg2
-import psycopg2.extras  # We'll need this to convert SQL responses into Dictionaries
+import psycopg2.extras 
 import sys
 from flask import Flask, current_app, request
 from dotenv import dotenv_values
