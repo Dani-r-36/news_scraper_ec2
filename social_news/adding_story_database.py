@@ -12,7 +12,7 @@ def adding_stories(story_title, url_list):
     try:
         curs= conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
         current_date = datetime.today().strftime('%Y-%m-%d')
-        # curs.execute(" ALTER SEQUENCE stories_id_seq RESTART WITH 1;")
+        curs.execute(" ALTER SEQUENCE stories_id_seq RESTART WITH 1;")
         for index, story in enumerate(story_title):
             story=story.replace("'","''")
             sql_insert_data("""INSERT INTO stories(title, url, created_at, updated_at)
