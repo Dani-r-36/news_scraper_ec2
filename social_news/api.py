@@ -4,23 +4,22 @@ import psycopg2.extras
 import sys
 from flask import Flask, current_app, request
 from dotenv import dotenv_values
-app = Flask(__name__)
 
 if sys.argv[1] == 'production':
   config = dotenv_values('.env.production')
-  app.run(host='0.0.0.0', port=5000)
 else:
   config = dotenv_values('.env.development')
-  app.run(host='0.0.0.0', port=5000)
 print(config)
 
+app = Flask(__name__)
 
 def get_db_connection():
     """establishes connection to database"""
     try:
         connection = psycopg2.connect( user = config["DATABASE_USERNAME"], password = config["DATABASE_PASSWORD"], host = config["DATABASE_IP"], port = config["DATABASE_PORT"], database = config["DATABASE_NAME"]) 
         return connection
-    except:
+    except Exception as err:
+        print (err)
         print("Error connecting to database.")
 
 conn = get_db_connection()
@@ -151,3 +150,6 @@ def sql_insert_data(sql,params):
     curs.execute(sql, params)
     conn.commit()
     curs.close()
+
+if __name__== '__main__':
+    app.run(host='0.0.0.0', port=5000)
