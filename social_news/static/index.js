@@ -3,10 +3,13 @@ window.onload = async function load() {
 }
 
 async function getStories() {
-  const res = await fetch('http://127.0.0.1:5001/stories', {
-    method: 'GET',
-    credentials: 'include'
-  })
+  const res = await fetch(
+    'c7-dani-load-balancer-374708145.eu-north-1.elb.amazonaws.com/stories',
+    {
+      method: 'GET',
+      credentials: 'include'
+    }
+  )
   const data = await res.json()
 
   displayStories(data.stories)
@@ -16,12 +19,15 @@ async function handleVote(e) {
   const elemID = e.target.id.split('-')
   const id = elemID[0]
   const direction = elemID[1]
-  const rawRes = await fetch(`http://127.0.0.1:5001/stories/${id}/votes`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ direction }),
-    credentials: 'include'
-  })
+  const rawRes = await fetch(
+    `c7-dani-load-balancer-374708145.eu-north-1.elb.amazonaws.com/votes`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ direction }),
+      credentials: 'include'
+    }
+  )
   const res = await rawRes.json()
   location.reload()
 }
