@@ -150,6 +150,7 @@ def sql_insert_data(sql,params):
     curs.execute(sql, params)
     conn.commit()
     curs.close()
-
+print("153")
 if __name__== '__main__':
     app.run(host='0.0.0.0', port=5000)
+print("156")

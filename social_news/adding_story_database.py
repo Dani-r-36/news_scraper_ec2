@@ -3,16 +3,15 @@ from datetime import datetime
 import psycopg2
 import psycopg2.extras
 from psycopg2 import sql
-from api import sql_execute, sql_insert_data, get_db_connection, error_message
+from api import sql_execute, sql_insert_data, conn, error_message
 
-conn = get_db_connection()
 
 def adding_stories(story_title, url_list):
     """carrys out insert for database"""
     try:
-        curs= conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+        #curs= conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
         current_date = datetime.today().strftime('%Y-%m-%d')
-        curs.execute(" ALTER SEQUENCE stories_id_seq RESTART WITH 1;")
+        #curs.execute(" ALTER SEQUENCE stories_id_seq RESTART WITH 1;")
         for index, story in enumerate(story_title):
             story=story.replace("'","''")
             sql_insert_data("""INSERT INTO stories(title, url, created_at, updated_at)
@@ -25,15 +24,21 @@ def adding_stories(story_title, url_list):
 
 def adding_tags(story_tag):
     """inserts and gets ids of tags which are being scrapped"""
+    print("tags 28")
     try:
-        curs= conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+        print("tags 30")
+        #curs= conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
         tag_id=[]
-        curs.execute(" ALTER SEQUENCE tags_id_seq RESTART WITH 1;")
+        print("tags32")
+        #curs.execute(" ALTER SEQUENCE tags_id_se RESTART WITH 1;")
+        print("tags 33")
         i = 0
         while i < len(story_tag):
             data = tags_return_id(story_tag[i])
+            print("tags39")
             if len(data) == 0:
                 sql_insert_data("INSERT INTO tags (description) VALUES (%s);",[story_tag[i]])
+                print("tags 42")
                 data = tags_return_id(story_tag[i])
             tag_id.append(data[0]['id'])
             i +=1
@@ -54,3 +59,4 @@ def adding_metadata(tags_list):
     curs.execute(" ALTER SEQUENCE metadata_id_seq RESTART WITH 1;")
     for index, tag in enumerate(tags_list):
         sql_insert_data("INSERT INTO metadata(story_id, tag_id) VALUES (%s, %s);",[index+1, tag])
+    print("worked")
