@@ -20,7 +20,7 @@ async function handleVote(e) {
   const id = elemID[0]
   const direction = elemID[1]
   const rawRes = await fetch(
-    `http://c7-dani-balancer-1986130919.eu-west-2.elb.amazonaws.com/votes`,
+    `http://c7-dani-balancer-1986130919.eu-west-2.elb.amazonaws.com/stories/${id}/votes`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

@@ -15,7 +15,6 @@ MarkupSafe
 mdurl
 packaging
 pluggy
-psycopg2
 psycopg2-binary
 Pygments
 pytest

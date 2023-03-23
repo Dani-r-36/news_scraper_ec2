@@ -10,8 +10,9 @@ def adding_stories(story_title, url_list):
     """carrys out insert for database"""
     try:
         #curs= conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
-        current_date = datetime.today().strftime('%Y-%m-%d')
+        #current_date = datetime.today().strftime('%Y-%m-%d')
         #curs.execute(" ALTER SEQUENCE stories_id_seq RESTART WITH 1;")
+        #curs.close()
         for index, story in enumerate(story_title):
             story=story.replace("'","''")
             sql_insert_data("""INSERT INTO stories(title, url, created_at, updated_at)
@@ -26,19 +27,21 @@ def adding_tags(story_tag):
     """inserts and gets ids of tags which are being scrapped"""
     print("tags 28")
     try:
-        print("tags 30")
+        print("before alter tags")
         #curs= conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
         tag_id=[]
-        print("tags32")
-        #curs.execute(" ALTER SEQUENCE tags_id_se RESTART WITH 1;")
-        print("tags 33")
+        print("before execute")
+        #curs.execute(" ALTER SEQUENCE tags_id_seq RESTART WITH 1;")
+        #curs.close()
         i = 0
+        print("tags before while")
         while i < len(story_tag):
+            print("before select")
             data = tags_return_id(story_tag[i])
-            print("tags39")
+            print("tag before insert")	
             if len(data) == 0:
                 sql_insert_data("INSERT INTO tags (description) VALUES (%s);",[story_tag[i]])
-                print("tags 42")
+                print("after insert")
                 data = tags_return_id(story_tag[i])
             tag_id.append(data[0]['id'])
             i +=1
@@ -55,8 +58,9 @@ def tags_return_id(description):
 
 def adding_metadata(tags_list):
     """inserting tag_id for each story"""
-    curs= conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
-    curs.execute(" ALTER SEQUENCE metadata_id_seq RESTART WITH 1;")
+    #curs= conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+    #curs.execute(" ALTER SEQUENCE metadata_id_seq RESTART WITH 1;")
+    #curs.close()
     for index, tag in enumerate(tags_list):
         sql_insert_data("INSERT INTO metadata(story_id, tag_id) VALUES (%s, %s);",[index+1, tag])
     print("worked")

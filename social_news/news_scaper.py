@@ -74,10 +74,12 @@ def valid_url(url_list):
 if __name__ == "__main__":
     print("news 75")
     story_name, story_url, story_tag =get_stories()
+    print("after get stories")
     urls=valid_url(story_url)
-    print("news 78")
+    print("before adding tags")
     tags=adding_tags(story_tag)
-    print("news 80")
+    print("before sotries")
     adding_stories(story_name, urls)
+    print("before metadata")
     adding_metadata(tags)
     
