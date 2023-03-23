@@ -9,9 +9,10 @@ from api import sql_execute, sql_insert_data, conn, error_message
 def adding_stories(story_title, url_list):
     """carrys out insert for database"""
     try:
-       # curs= conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
-        current_date = datetime.today().strftime('%Y-%m-%d')
-       # curs.execute(" ALTER SEQUENCE stories_id_seq RESTART WITH 1;")
+        #curs= conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+        #current_date = datetime.today().strftime('%Y-%m-%d')
+        #curs.execute(" ALTER SEQUENCE stories_id_seq RESTART WITH 1;")
+        #curs.close()
         for index, story in enumerate(story_title):
             story=story.replace("'","''")
             sql_insert_data("""INSERT INTO stories(title, url, created_at, updated_at)
@@ -27,10 +28,11 @@ def adding_tags(story_tag):
     print("tags 28")
     try:
         print("before alter tags")
-       # curs= conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+        #curs= conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
         tag_id=[]
         print("before execute")
-       # curs.execute(" ALTER SEQUENCE tags_id_seq RESTART WITH 1;")
+        #curs.execute(" ALTER SEQUENCE tags_id_seq RESTART WITH 1;")
+        #curs.close()
         i = 0
         print("tags before while")
         while i < len(story_tag):
@@ -56,8 +58,9 @@ def tags_return_id(description):
 
 def adding_metadata(tags_list):
     """inserting tag_id for each story"""
-    curs= conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
-    curs.execute(" ALTER SEQUENCE metadata_id_seq RESTART WITH 1;")
+    #curs= conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+    #curs.execute(" ALTER SEQUENCE metadata_id_seq RESTART WITH 1;")
+    #curs.close()
     for index, tag in enumerate(tags_list):
         sql_insert_data("INSERT INTO metadata(story_id, tag_id) VALUES (%s, %s);",[index+1, tag])
     print("worked")
