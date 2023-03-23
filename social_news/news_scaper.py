@@ -72,6 +72,7 @@ def valid_url(url_list):
 
 
 if __name__ == "__main__":
+    print("news 75")
     story_name, story_url, story_tag =get_stories()
     print("after get stories")
     urls=valid_url(story_url)

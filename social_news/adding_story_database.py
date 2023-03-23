@@ -3,9 +3,8 @@ from datetime import datetime
 import psycopg2
 import psycopg2.extras
 from psycopg2 import sql
-from api import sql_execute, sql_insert_data, get_db_connection, error_message
+from api import sql_execute, sql_insert_data, conn, error_message
 
-conn = get_db_connection()
 
 def adding_stories(story_title, url_list):
     """carrys out insert for database"""
@@ -25,6 +24,7 @@ def adding_stories(story_title, url_list):
 
 def adding_tags(story_tag):
     """inserts and gets ids of tags which are being scrapped"""
+    print("tags 28")
     try:
         print("before alter tags")
        # curs= conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
@@ -60,3 +60,4 @@ def adding_metadata(tags_list):
     curs.execute(" ALTER SEQUENCE metadata_id_seq RESTART WITH 1;")
     for index, tag in enumerate(tags_list):
         sql_insert_data("INSERT INTO metadata(story_id, tag_id) VALUES (%s, %s);",[index+1, tag])
+    print("worked")
