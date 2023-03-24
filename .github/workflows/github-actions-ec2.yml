@@ -31,7 +31,7 @@ jobs:
 #               deploy:
 #                 name: Deploy to EC2
           runs-on: ubuntu-latest
-          if: always() && needs.pylint.result == 'success'
+          if: always() && needs.pylint.result != failure()
           steps:
             - name: Checkout the files
               uses: actions/checkout@v3
