@@ -31,7 +31,9 @@ jobs:
   EC2:
 #               deploy:
 #                 name: Deploy to EC2
-          if: always() && needs.pylint.result != failure()
+          needs:
+            - pylint
+          if: always() && needs.pylint.result == 'success'
           runs-on: ubuntu-latest
           steps:
             - name: Checkout the files
